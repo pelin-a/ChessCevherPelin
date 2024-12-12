@@ -93,7 +93,7 @@ class Game:
                 print("You cannot play this piece.")
                 return False
         else:
-            print("Invalid input")
+            print("Invalid input") 
             return False
             
         

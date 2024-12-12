@@ -110,26 +110,51 @@ class Pawn(Piece):
 class Rook(Piece):
     def __init__(self,color,location):
         super().__init__(color,location,"R" if color == "white" else "r")
+    
+    #TODO:    
+    def possible_moves(self,board)->list:
+        #returns a list of possible,legal moves a piece can make
+        pass
         
 class Knight(Piece):
     def __init__(self,color,location):
         symbol="N" if color == "white" else "n"
         super().__init__(color,location,symbol)
         
+        #TODO:    
+    def possible_moves(self,board)->list:
+        #returns a list of possible,legal moves a piece can make
+        pass
+        
 class Bishop(Piece):
     def __init__(self,color,location):
         symbol= "B" if color == "white" else "b"
         super().__init__(color,location,symbol)
+        
+        #TODO:    
+    def possible_moves(self,board)->list:
+        #returns a list of possible,legal moves a piece can make
+        pass
         
 class Queen(Piece):
     def __init__(self,color,location):
         symbol="Q" if color == "white" else "q"
         super().__init__(color,location,symbol)
         
+        #TODO:    
+    def possible_moves(self,board)->list:
+        #returns a list of possible,legal moves a piece can make
+        pass
+        
 class King(Piece):
     def __init__(self,color,location):
         symbol="K" if color == "white" else "k"
         super().__init__(color,location,symbol)
+        
+        #TODO:    
+    def possible_moves(self,board)->list:
+        #returns a list of possible,legal moves a piece can make
+        pass
         
 pawn=Pawn("white","e2")
 
