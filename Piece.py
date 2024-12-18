@@ -113,7 +113,39 @@ class Rook(Piece):
     
     #TODO:    
     def possible_moves(self,board)->list:
-        #returns a list of possible,legal moves a piece can make
+        possible_moves = []
+        start_col = self.location[0]
+        start_row = int(self.location[1])
+        
+        # check moves along the rank (horizontal movement)
+        for col_offset in range(-7, 8):
+            if col_offset == 0:
+                continue
+            new_col = chr(ord(start_col) + col_offset)
+            new_pos = f"{new_col}{start_row}"
+            if 'a' <= new_col <= 'h' and board.board_get_piece(new_pos) is None:
+                possible_moves.append(new_pos)
+            elif 'a' <= new_col <= 'h' and board.board_get_piece(new_pos).get_color() != self.color:
+                possible_moves.append(new_pos)
+                break 
+            else:
+                break  
+        
+        # check moves along the file (vertical movement)
+        for row_offset in range(-7, 8):
+            if row_offset == 0:
+                continue
+            new_row = start_row + row_offset
+            new_pos = f"{start_col}{new_row}"
+            if 1 <= new_row <= 8 and board.board_get_piece(new_pos) is None:
+                possible_moves.append(new_pos)
+            elif 1 <= new_row <= 8 and board.board_get_piece(new_pos).get_color() != self.color:
+                possible_moves.append(new_pos)
+                break 
+            else:
+                break  
+        
+        return possible_moves
         pass
         
 class Knight(Piece):
