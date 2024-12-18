@@ -2,29 +2,35 @@
 class Piece:
     """Class for representing all different pieces in the chess game and their specific methods"""
     
-    def __init__(self,color,location,symbol):
-        self.color=color
-        self.location=location
-        self.symbol=symbol
-    
-    #def get_piece_type(self):
-        #return self.piece_type
-    
-    #setter
-    
+    def __init__(self, color, location, symbol):
+        self._color = color
+        self._location = location
+        self._symbol = symbol
+
+  
     def get_color(self):
-        return self.color
+        return self._color
+
     
-    #setter
-    
+    def set_color(self, color):
+        self._color = color
+
+   
     def get_location(self):
-        return self.location
-    
-    def set_location(self,location):
-        self.location=location
-        
+        return self._location
+
+ 
+    def set_location(self, location):
+        self._location = location
+
+
     def get_symbol(self):
-        return self.symbol
+        return self._symbol
+
+  
+    def set_symbol(self, symbol):
+        self._symbol = symbol
+
         
     
     
