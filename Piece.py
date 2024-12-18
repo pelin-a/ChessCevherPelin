@@ -107,85 +107,180 @@ class Pawn(Piece):
         return False
                 
   
-class Rook(Piece):
-    def __init__(self,color,location):
-        super().__init__(color,location,"R" if color == "white" else "r")
-    
-    #TODO:    
-    def possible_moves(self,board)->list:
+class Rook(Piece): #OK
+    def __init__(self, color, location):
+        symbol = "R" if color == "white" else "r"
+        super().__init__(color, location, symbol)
+
+    def possible_moves(self, board) -> list:
         possible_moves = []
-        start_col = self.location[0]
-        start_row = int(self.location[1])
-        
-        # check moves along the rank (horizontal movement)
-        for col_offset in range(-7, 8):
-            if col_offset == 0:
-                continue
-            new_col = chr(ord(start_col) + col_offset)
-            new_pos = f"{new_col}{start_row}"
-            if 'a' <= new_col <= 'h' and board.board_get_piece(new_pos) is None:
-                possible_moves.append(new_pos)
-            elif 'a' <= new_col <= 'h' and board.board_get_piece(new_pos).get_color() != self.color:
-                possible_moves.append(new_pos)
-                break 
-            else:
-                break  
-        
-        # check moves along the file (vertical movement)
-        for row_offset in range(-7, 8):
-            if row_offset == 0:
-                continue
-            new_row = start_row + row_offset
-            new_pos = f"{start_col}{new_row}"
-            if 1 <= new_row <= 8 and board.board_get_piece(new_pos) is None:
-                possible_moves.append(new_pos)
-            elif 1 <= new_row <= 8 and board.board_get_piece(new_pos).get_color() != self.color:
-                possible_moves.append(new_pos)
-                break 
-            else:
-                break  
-        
+
+        start_col = self.location[0]  # Column letter
+        start_row = int(self.location[1])  # Row number
+
+        # Helper function to generate moves in a direction
+        def traverse_direction(col_step, row_step):
+            col, row = start_col, start_row
+            while True:
+                col = chr(ord(col) + col_step)  # Move column
+                row = row + row_step  # Move row
+                if not ('a' <= col <= 'h' and 1 <= row <= 8):
+                    break  # Out of board bounds
+
+                destination = f"{col}{row}"
+                piece_at_dest = board.board_get_piece(destination)
+                if piece_at_dest is None:
+                    possible_moves.append(destination)
+                elif piece_at_dest.get_color() != self.color:
+                    possible_moves.append(destination)  # Capture enemy piece
+                    break  # Stop after capturing
+                else:
+                    break  # Stop if blocked by a friendly piece
+
+        # Traverse the four possible directions for the rook
+        directions = [
+            (1, 0), (-1, 0),  # Horizontal (right, left)
+            (0, 1), (0, -1)   # Vertical (up, down)
+        ]
+
+        for col_step, row_step in directions:
+            traverse_direction(col_step, row_step)
+
         return possible_moves
-        pass
+
         
-class Knight(Piece):
+class Knight(Piece): #OK
     def __init__(self,color,location):
         symbol="N" if color == "white" else "n"
         super().__init__(color,location,symbol)
         
         #TODO:    
     def possible_moves(self,board)->list:
-        #returns a list of possible,legal moves a piece can make
+        possible_moves = []
+        start_col = self.location[0]
+        start_row = int(self.location[1])
+
+        # List of all possible knight move offsets
+        move_offsets = [
+            (2, 1), (2, -1), (-2, 1), (-2, -1),
+            (1, 2), (1, -2), (-1, 2), (-1, -2)
+        ]
+
+        for row_offset, col_offset in move_offsets:
+            new_row = start_row + row_offset
+            new_col = chr(ord(start_col) + col_offset)
+            new_pos = f"{new_col}{new_row}"
+            if 'a' <= new_col <= 'h' and 1 <= new_row <= 8:
+                piece_at_pos = board.board_get_piece(new_pos)
+                if piece_at_pos is None or piece_at_pos.get_color() != self.color:
+                    possible_moves.append(new_pos)
+
+        return possible_moves
         pass
         
-class Bishop(Piece):
+class Bishop(Piece): #OK
     def __init__(self,color,location):
         symbol= "B" if color == "white" else "b"
         super().__init__(color,location,symbol)
         
         #TODO:    
     def possible_moves(self,board)->list:
-        #returns a list of possible,legal moves a piece can make
+        possible_moves = []
+        start_col = self.location[0]
+        start_row = int(self.location[1])
+
+        # Diagonal directions: (+1, +1), (+1, -1), (-1, +1), (-1, -1)
+        for row_offset, col_offset in [(1, 1), (1, -1), (-1, 1), (-1, -1)]:
+            for step in range(1, 8):
+                new_row = start_row + step * row_offset
+                new_col = chr(ord(start_col) + step * col_offset)
+                new_pos = f"{new_col}{new_row}"
+                if 'a' <= new_col <= 'h' and 1 <= new_row <= 8:
+                    piece_at_pos = board.board_get_piece(new_pos)
+                    if piece_at_pos is None:
+                        possible_moves.append(new_pos)
+                    elif piece_at_pos.get_color() != self.color:
+                        possible_moves.append(new_pos)
+                        break  # Stop at the first enemy piece
+                    else:
+                        break  # Stop at the first obstruction
+                else:
+                    break  # Stop if out of board bounds
+
+        return possible_moves
         pass
         
-class Queen(Piece):
-    def __init__(self,color,location):
-        symbol="Q" if color == "white" else "q"
-        super().__init__(color,location,symbol)
+class Queen(Piece): #OK
+    def __init__(self, color, location):
+        symbol = "Q" if color == "white" else "q"
+        super().__init__(color, location, symbol)
+
+    def possible_moves(self, board) -> list:
+        possible_moves = []
+
+        start_col = self.location[0]  # Column letter
+        start_row = int(self.location[1])  # Row number
+
+        # Helper function to generate moves in a direction
+        def traverse_direction(col_step, row_step):
+            col, row = start_col, start_row
+            while True:
+                col = chr(ord(col) + col_step)  # Move column
+                row = row + row_step  # Move row
+                if not ('a' <= col <= 'h' and 1 <= row <= 8):
+                    break  # Out of board bounds
+
+                destination = f"{col}{row}"
+                piece_at_dest = board.board_get_piece(destination)
+                if piece_at_dest is None:
+                    possible_moves.append(destination)
+                elif piece_at_dest.get_color() != self.color:
+                    possible_moves.append(destination)  # Capture enemy piece
+                    break  # Stop after capturing
+                else:
+                    break  # Stop if blocked by a friendly piece
+
+        # Traverse all 8 possible directions for the queen
+        directions = [
+            (1, 0), (-1, 0),  # Horizontal (right, left)
+            (0, 1), (0, -1),  # Vertical (up, down)
+            (1, 1), (-1, -1),  # Diagonal (up-right, down-left)
+            (1, -1), (-1, 1)   # Diagonal (down-right, up-left)
+        ]
+
+        for col_step, row_step in directions:
+            traverse_direction(col_step, row_step)
+
+        return possible_moves
+
         
-        #TODO:    
-    def possible_moves(self,board)->list:
-        #returns a list of possible,legal moves a piece can make
-        pass
-        
-class King(Piece):
+class King(Piece): #OK
     def __init__(self,color,location):
         symbol="K" if color == "white" else "k"
         super().__init__(color,location,symbol)
         
         #TODO:    
     def possible_moves(self,board)->list:
-        #returns a list of possible,legal moves a piece can make
+        possible_moves = []
+        start_col = self.location[0]
+        start_row = int(self.location[1])
+
+        # All possible directions for the king
+        move_offsets = [
+            (1, 0), (-1, 0), (0, 1), (0, -1),
+            (1, 1), (1, -1), (-1, 1), (-1, -1)
+        ]
+
+        for row_offset, col_offset in move_offsets:
+            new_row = start_row + row_offset
+            new_col = chr(ord(start_col) + col_offset)
+            new_pos = f"{new_col}{new_row}"
+            if 'a' <= new_col <= 'h' and 1 <= new_row <= 8:
+                piece_at_pos = board.board_get_piece(new_pos)
+                if piece_at_pos is None or piece_at_pos.get_color() != self.color:
+                    possible_moves.append(new_pos)
+
+        return possible_moves
         pass
         
 pawn=Pawn("white","e2")
