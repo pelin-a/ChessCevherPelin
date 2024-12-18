@@ -121,15 +121,15 @@ class Rook(Piece): #OK
     def possible_moves(self, board) -> list:
         possible_moves = []
 
-        start_col = self.location[0]  # Column letter
-        start_row = int(self.location[1])  # Row number
+        start_col = self.location[0] 
+        start_row = int(self.location[1]) 
 
         # Helper function to generate moves in a direction
         def traverse_direction(col_step, row_step):
             col, row = start_col, start_row
             while True:
-                col = chr(ord(col) + col_step)  # Move column
-                row = row + row_step  # Move row
+                col = chr(ord(col) + col_step) 
+                row = row + row_step  
                 if not ('a' <= col <= 'h' and 1 <= row <= 8):
                     break  # Out of board bounds
 
@@ -145,8 +145,8 @@ class Rook(Piece): #OK
 
         # Traverse the four possible directions for the rook
         directions = [
-            (1, 0), (-1, 0),  # Horizontal (right, left)
-            (0, 1), (0, -1)   # Vertical (up, down)
+            (1, 0), (-1, 0), 
+            (0, 1), (0, -1)   
         ]
 
         for col_step, row_step in directions:
@@ -195,7 +195,7 @@ class Bishop(Piece): #OK
         start_col = self.location[0]
         start_row = int(self.location[1])
 
-        # Diagonal directions: (+1, +1), (+1, -1), (-1, +1), (-1, -1)
+       
         for row_offset, col_offset in [(1, 1), (1, -1), (-1, 1), (-1, -1)]:
             for step in range(1, 8):
                 new_row = start_row + step * row_offset
@@ -224,15 +224,15 @@ class Queen(Piece): #OK
     def possible_moves(self, board) -> list:
         possible_moves = []
 
-        start_col = self.location[0]  # Column letter
-        start_row = int(self.location[1])  # Row number
+        start_col = self.location[0]  
+        start_row = int(self.location[1]) 
 
         # Helper function to generate moves in a direction
         def traverse_direction(col_step, row_step):
             col, row = start_col, start_row
             while True:
-                col = chr(ord(col) + col_step)  # Move column
-                row = row + row_step  # Move row
+                col = chr(ord(col) + col_step) 
+                row = row + row_step 
                 if not ('a' <= col <= 'h' and 1 <= row <= 8):
                     break  # Out of board bounds
 
@@ -248,10 +248,10 @@ class Queen(Piece): #OK
 
         # Traverse all 8 possible directions for the queen
         directions = [
-            (1, 0), (-1, 0),  # Horizontal (right, left)
-            (0, 1), (0, -1),  # Vertical (up, down)
-            (1, 1), (-1, -1),  # Diagonal (up-right, down-left)
-            (1, -1), (-1, 1)   # Diagonal (down-right, up-left)
+            (1, 0), (-1, 0), 
+            (0, 1), (0, -1), 
+            (1, 1), (-1, -1), 
+            (1, -1), (-1, 1)  
         ]
 
         for col_step, row_step in directions:
