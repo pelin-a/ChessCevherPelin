@@ -49,7 +49,7 @@ class Pawn(Piece):
         start_row = int(self.location[1])  
         direction = 1 if self.color == "white" else -1
         
-        # ine square forward
+        # one square forward
         forward_row = start_row + direction
         if 1 <= forward_row <= 8:  # Check if within board limits
             forward_move = f"{start_col}{forward_row}"
