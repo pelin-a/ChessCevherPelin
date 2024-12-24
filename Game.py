@@ -51,6 +51,7 @@ class Game:
         player.bag.append(piece)
         self.board.remove_piece(piece.get_location())
         print(f"{player.get_name()} won {piece.get_color()}{piece.get_name()}")
+        
        
     #TODO:
     def in_check(self, start,end) ->bool:
