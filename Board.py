@@ -24,6 +24,9 @@ class Board:
     
     def board_get_piece(self,key):
         return self.board[key]
+    
+    def remove_piece(self,key):
+        self.board[key]=None
         
     def place_pieces(self)-> None: 
         # does the inital placement of pieces on board, 
@@ -41,7 +44,7 @@ class Board:
 
             
         for square, piece in self.board.items():
-            row_index = 8 - int(square[1])  
+            row_index = 8 - int(square[1])  # first row's index is 0, but because of the board layout it corresponds to 8, so we are substracting the row nummber from 8 so that they are the same
             board[row_index][square] = piece
 
         # Print each row

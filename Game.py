@@ -17,16 +17,21 @@ class Game:
         while game:
             self.board.print_board()
             if player1_turn:
-                self.turn(self.player1)
+                self.move(self.player1)
+                #self.turn(self.player1)
                 self.board.print_board()
                 player1_turn=False
             else:
-                self.turn(self.player2)
+                
+                self.move(self.player2)
+                #self.turn(self.player2)
                 player1_turn=True
         return self.end_game()        
                 
-
+    #TODO:
     def end_game(self):
+        # if self.checkmate(player)=True
+        #self.game=False
         pass
     
     
@@ -40,10 +45,14 @@ class Game:
         player2_color="white" if player1_color=="black" else "black"
         self.player1=Player(player1_name,player1_color)
         self.player2=Player(player2_name,player2_color)
- 
-    def win_piece(player,piece):
-        pass
     
+    #TODO:
+    def win_piece(self,player,piece):
+        player.bag.append(piece)
+        self.board.remove_piece(piece.get_location())
+        print(f"{player.get_name()} won {piece.get_color()}{piece.get_name()}")
+       
+    #TODO:
     def in_check(self, start,end) ->bool:
         pass
     
@@ -55,12 +64,13 @@ class Game:
         pass
     
     def turn(self,player)->bool:
-        #returns False when the turn is over
+        game.move(player)
+        return False
         
-        pass
     
     def move(self,player):
         board=self.board.get_board()
+        print(f"It's {player.get_name()}'s turn.")
         start=input("Enter the starting point of the piece you want to play: ")
         if self.check_valid_start(start,player)==True:
             piece=board[start]  
@@ -82,24 +92,23 @@ class Game:
             
         
     def check_valid_start(self,sqr,player):
-        if self.board.get_board()[sqr]==None:
-            print("This square is empty")
-            return False
-        if sqr in self.board.get_board().keys():
-            color=player.get_color()
-            if self.board.get_board()[sqr].get_color()==color:
-                return True
-            else:
-                print("You cannot play this piece.")
+        try:
+            if self.board.get_board()[sqr]==None:
+                print("This square is empty")
                 return False
-        else:
-            print("Invalid input") 
+            if sqr in self.board.get_board().keys():
+                color=player.get_color()
+                if self.board.get_board()[sqr].get_color()==color:
+                    return True
+                else:
+                    print("You cannot play this piece.")
+                    return False
+        except KeyError:
+            print("Invalid suare name") 
             return False
             
         
 player1=Player("Pelin","white")
 game=Game()
 
-game.board.print_board()
-game.move(player1)    
-game.board.print_board()
+game.start_game()

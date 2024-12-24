@@ -2,34 +2,41 @@
 class Piece:
     """Class for representing all different pieces in the chess game and their specific methods"""
     
-    def __init__(self, color, location, symbol):
-        self._color = color
-        self._location = location
-        self._symbol = symbol
+    def __init__(self, color, location, symbol, name):
+        self.color = color
+        self.location = location
+        self.symbol = symbol
+        self.name=name
 
   
     def get_color(self):
-        return self._color
+        return self.color
 
     
     def set_color(self, color):
-        self._color = color
+        self.color = color
 
    
     def get_location(self):
-        return self._location
+        return self.location
 
  
     def set_location(self, location):
-        self._location = location
+        self.location = location
 
 
     def get_symbol(self):
-        return self._symbol
+        return self.symbol
 
   
     def set_symbol(self, symbol):
-        self._symbol = symbol
+        self.symbol = symbol
+        
+    def get_name(self):
+        return self.name
+    
+    def set_name(self, name):
+        self.name=name
 
         
     
@@ -40,7 +47,8 @@ class Piece:
 class Pawn(Piece):
     def __init__(self,color,location):
         symbol="P" if color == "white" else "p"
-        super().__init__(color,location,symbol)
+        name = "Pawn"
+        super().__init__(color,location,symbol,name)
         
     def possible_moves(self,board):
         #returns a list of the possible moves Piece object can have
@@ -116,7 +124,8 @@ class Pawn(Piece):
 class Rook(Piece): #OK
     def __init__(self, color, location):
         symbol = "R" if color == "white" else "r"
-        super().__init__(color, location, symbol)
+        name="Rook"
+        super().__init__(color, location, symbol,name)
 
     def possible_moves(self, board) -> list:
         possible_moves = []
@@ -158,9 +167,10 @@ class Rook(Piece): #OK
 class Knight(Piece): #OK
     def __init__(self,color,location):
         symbol="N" if color == "white" else "n"
-        super().__init__(color,location,symbol)
+        name="Knight"
+        super().__init__(color,location,symbol,name)
         
-        #TODO:    
+          
     def possible_moves(self,board)->list:
         possible_moves = []
         start_col = self.location[0]
@@ -187,9 +197,10 @@ class Knight(Piece): #OK
 class Bishop(Piece): #OK
     def __init__(self,color,location):
         symbol= "B" if color == "white" else "b"
-        super().__init__(color,location,symbol)
+        name="Bishop"
+        super().__init__(color,location,symbol,name)
         
-        #TODO:    
+           
     def possible_moves(self,board)->list:
         possible_moves = []
         start_col = self.location[0]
@@ -219,7 +230,8 @@ class Bishop(Piece): #OK
 class Queen(Piece): #OK
     def __init__(self, color, location):
         symbol = "Q" if color == "white" else "q"
-        super().__init__(color, location, symbol)
+        name="Queen"
+        super().__init__(color, location, symbol,name)
 
     def possible_moves(self, board) -> list:
         possible_moves = []
@@ -263,9 +275,10 @@ class Queen(Piece): #OK
 class King(Piece): #OK
     def __init__(self,color,location):
         symbol="K" if color == "white" else "k"
-        super().__init__(color,location,symbol)
+        name="King"
+        super().__init__(color,location,symbol,name)
         
-        #TODO:    
+         
     def possible_moves(self,board)->list:
         possible_moves = []
         start_col = self.location[0]
