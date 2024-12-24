@@ -182,7 +182,7 @@ class Knight(Piece): #OK
                     possible_moves.append(new_pos)
 
         return possible_moves
-        pass
+        
         
 class Bishop(Piece): #OK
     def __init__(self,color,location):
@@ -214,7 +214,7 @@ class Bishop(Piece): #OK
                     break  # Stop if out of board bounds
 
         return possible_moves
-        pass
+        
         
 class Queen(Piece): #OK
     def __init__(self, color, location):
@@ -287,7 +287,7 @@ class King(Piece): #OK
                     possible_moves.append(new_pos)
 
         return possible_moves
-        pass
+        
         
 pawn=Pawn("white","e2")
 
