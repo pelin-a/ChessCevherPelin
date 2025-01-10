@@ -22,6 +22,22 @@ class Board:
         ]
         return pieces
     
+    def get_king(self,player):
+        for square,piece in self.board.items():
+            if piece != None and piece.color == player.get_color():
+                if isinstance(piece, King):
+                    king= piece
+                    break
+        return king   
+      
+    def safe_move(self, square, color): 
+        # checks if the square can be attacked by the opponont or safe, takes the color of the opponent
+        for key, piece in self.get_board().items():
+            if piece and piece.get_color()==color:
+                if square in piece.possible_moves(self):
+                    return False
+        return True         
+    
     def board_get_piece(self,key):
         return self.board[key]
     
@@ -36,7 +52,12 @@ class Board:
             if location in self.board:
                 self.board[location]=piece
     
-
+    def move_piece(self,start,end):
+        board=self.get_board()
+        piece=board[start]
+        board[end]=piece
+        board[start]=None 
+        
     def print_board(self):
         print("\n     A   B   C   D   E   F   G   H")
         print("   +---+---+---+---+---+---+---+---+")
@@ -74,6 +95,7 @@ class Board:
    
 
 #board=Board()
+
 #piece=Pawn("white","a4")
 #print(piece.possible_moves(board))
 #board.print_board2()

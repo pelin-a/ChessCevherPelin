@@ -1,6 +1,7 @@
 class Player:
     
-    def __init__(self,name,color):
+    def __init__(self,name,color,number):
+        self.number=number
         self.name=name
         self.color=color
         self.bag=[] #list of piece objects that the player won
@@ -25,4 +26,10 @@ class Player:
        
     def empty_bag(self):
         self.bag.clear()
+        
+    def get_number(self):
+        return self.number
+    
+    def set_number(self,number):
+        self.number=number
 
