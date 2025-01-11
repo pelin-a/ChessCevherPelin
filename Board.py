@@ -23,6 +23,7 @@ class Board:
         return pieces
     
     def get_king(self,player):
+        # finds a player's king on the board and returns it as an object.
         for square,piece in self.board.items():
             if piece != None and piece.color == player.get_color():
                 if isinstance(piece, King):
@@ -30,18 +31,18 @@ class Board:
                     break
         return king   
       
-    def safe_move(self, square, color): 
-        # checks if the square can be attacked by the opponont or safe, takes the color of the opponent
+    def safe_move(self, square, opponent_color): 
+        # checks if the square can be attacked by the opponont or safe, takes the color of the opponent.
         for key, piece in self.get_board().items():
-            if piece and piece.get_color()==color:
-                if square in piece.possible_moves(self):
+            if piece and piece.get_color()==opponent_color:
+                if square in piece.possible_moves(self): # checking if the square being checked is in the possible moves of any of the opponent's pieces.
                     return False
         return True         
     
-    def board_get_piece(self,key):
+    def board_get_piece(self,key): # gets the value at the specified key, if occupied returns the piece. 
         return self.board[key]
     
-    def remove_piece(self,key):
+    def remove_piece(self,key): # removes the piece from the given key.
         self.board[key]=None
         
     def place_pieces(self)-> None: 
@@ -52,7 +53,7 @@ class Board:
             if location in self.board:
                 self.board[location]=piece
     
-    def move_piece(self,start,end):
+    def move_piece(self,start,end): # moves a piece from starting square to end square.
         board=self.get_board()
         piece=board[start]
         board[end]=piece
@@ -68,7 +69,7 @@ class Board:
             row_index = 8 - int(square[1])  # first row's index is 0, but because of the board layout it corresponds to 8, so we are substracting the row nummber from 8 so that they are the same
             board[row_index][square] = piece
 
-        # Print each row
+        # Printing each row
         for row_index, row in enumerate(board):
             row_number = 8 - row_index  
             row_str = f"{row_number} |"

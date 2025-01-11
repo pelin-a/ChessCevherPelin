@@ -42,8 +42,8 @@ class Piece:
     
     
 
-#will inherit from piece class, will have their own movement logic        
-#TODO: getters, setters, move_piece() for each class
+#inherits from piece class, each piece class have their own movement logic.        
+
 class Pawn(Piece):
     def __init__(self,color,location):
         symbol="P" if color == "white" else "p"
@@ -59,7 +59,7 @@ class Pawn(Piece):
         
         # one square forward
         forward_row = start_row + direction
-        if 1 <= forward_row <= 8:  # Check if within board limits
+        if 1 <= forward_row <= 8:  # checking if within board limits
             forward_move = f"{start_col}{forward_row}"
             if board.board_get_piece(forward_move)==None:
                 
@@ -97,8 +97,10 @@ class Pawn(Piece):
         
     def validate_move(self,end,board):
         start =self.get_location()
-        start_row=int(start[1])   # Convert '1'-'8' to 0-7
-        start_column=ord(start[0]) - ord('a')  # Convert 'a'-'h' to 0-7
+        start_row=int(start[1])   
+        start_column=ord(start[0]) - ord('a')  #ord converts the letter into the corresponding ASCII value, to be a able to do order calculations. 
+        #Subtracting ord('a') from ord(start[0]) maps the column letter to a zero-based index.
+
         
         end_row= int(end[1]) 
         end_column=ord(end[0]) - ord('a')
@@ -121,7 +123,7 @@ class Pawn(Piece):
         return False
                 
   
-class Rook(Piece): #OK
+class Rook(Piece): 
     def __init__(self, color, location):
         symbol = "R" if color == "white" else "r"
         name="Rook"
@@ -164,7 +166,7 @@ class Rook(Piece): #OK
         return possible_moves
 
         
-class Knight(Piece): #OK
+class Knight(Piece): 
     def __init__(self,color,location):
         symbol="N" if color == "white" else "n"
         name="Knight"
@@ -194,7 +196,7 @@ class Knight(Piece): #OK
         return possible_moves
         
         
-class Bishop(Piece): #OK
+class Bishop(Piece): 
     def __init__(self,color,location):
         symbol= "B" if color == "white" else "b"
         name="Bishop"
@@ -227,7 +229,7 @@ class Bishop(Piece): #OK
         return possible_moves
         
         
-class Queen(Piece): #OK
+class Queen(Piece): 
     def __init__(self, color, location):
         symbol = "Q" if color == "white" else "q"
         name="Queen"
@@ -272,7 +274,7 @@ class Queen(Piece): #OK
         return possible_moves
 
         
-class King(Piece): #OK
+class King(Piece): 
     def __init__(self,color,location):
         symbol="K" if color == "white" else "k"
         name="King"
@@ -302,5 +304,5 @@ class King(Piece): #OK
         return possible_moves
         
         
-pawn=Pawn("white","e2")
+#pawn=Pawn("white","e2")
 
